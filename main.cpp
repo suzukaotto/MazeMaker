@@ -34,12 +34,13 @@ int main(){
 			case 4:
 				exitPage();
 				break;
+				
 		}
 	}
 }
 
 int initGame(){
-	system("title Maze Maker "Version);
+	SetConsoleTitle("Maze Maker "Version);
 	srand(time(NULL));
 	CursorVisible(false);
 }

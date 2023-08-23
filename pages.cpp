@@ -1,6 +1,12 @@
 #include "src.h"
 using namespace std;
 
+#define pause system("pause")
+#define pauseNUL system("pause > nul")
+#define cls system("cls")
+
+#define delay Sleep(1)
+
 int exitPage();
 
 void pageCls(){
@@ -27,13 +33,13 @@ int startPage(){
 	
 	char mainStr[10][51] = {
 		"Welcome to Maze Maker!",
-		"Made by suzukaotto",
-		"",
 		"Please select this menu.",
+		"",
+		""
 	};
 	char menuStr[4][21] = {
 		"Play",
-		"Make ground",
+		"Make Maze",
 		"Manual",
 		"Exit" 
 	};
@@ -46,14 +52,14 @@ int startPage(){
 	
 	// menu Select & Print
 	gotoxy(0, 17);
-	SetColor(7);
+	SetColor(WHITE);
 	printStr("Use the number key!");
 	
 	gotoxy(0, 18);
-	SetColor(8);
+	SetColor(GRAY);
 	printStr("For how to use, check the manual by pressing the [3] key.");
 	clsBack;
-	SetColor(7);
+	SetColor(WHITE);
 	
 	for(int i=0; i<4; i++){
 		gotoxy(0, i+7);
@@ -66,7 +72,7 @@ int startPage(){
 	
 	while(1){
 		gotoxy(0, 17);
-		SetColor(7);
+		SetColor(WHITE);
 		switch(getch()){
 			case k1:
 				selNum=1;
@@ -89,32 +95,35 @@ int startPage(){
 			
 			case kEnter:
 				if(selNum == 0){
-					SetColor(12);
-					printStr("Please select menu");
 					clsBack;
+					gotoxy(0, 17);
+					SetColor(RED);
+					printStr("Please select menu");
 					continue;
 				}
-				printStr("Ok!");
 				clsBack;
-				Sleep(1000);
+				gotoxy(0, 17);
+				printStr("Okay!");
+				Sleep(700);
 				return selNum;
 			
 			default:
 				selNum=0;
-				SetColor(12);
-				printStr("Please check your input");
 				clsBack;
+				gotoxy(0, 17);
+				SetColor(RED);
+				printStr("Please check your input");
 				continue;
 		}
 		
 		gotoxy(0, 17);
 		clsBack;
 		gotoxy(0, 17);
-		SetColor(15);
+		SetColor(darkWHITE);
 		printStr(menuStr[selNum-1]);
 		
-		SetColor(7);
-		printStr(" << Select this menu? (Enter)");
+		SetColor(WHITE);
+		printStr(" << Select this menu? [Enter]");
 		clsBack;
 	}
 	
@@ -123,6 +132,7 @@ int startPage(){
 
 int playPage(){
 	gotoxy(0, 0);
+	SetColor(WHITE);
 	printStr("In Game Page...");
 	gotoxy(0, 1);
 	pause;
@@ -130,6 +140,7 @@ int playPage(){
 
 int makePage(){
 	gotoxy(0, 0);
+	SetColor(WHITE);
 	printStr("Make Game Page...");
 	gotoxy(0, 1);
 	pause;
@@ -139,54 +150,55 @@ void manualPage(){
 	int pageMax=3;
 	int pageNum=0;
 	
-	char manualStr[pageMax][13][100]{
+	char manualStr[pageMax][14][100]{
 		{
 			// page 1
-			{"How to play?"},
+			{"How to use / caution"},
 			{""},
+			{"You can enter by entering the number in the list in the menu window with the key."},
 			{""},
+			{"In the 'Play' window, you can play the basic maze."},
+			{"In the 'Make maze' window, you can make and play your own maze."},
+			{"In the 'Manual' window, you can see various explanations as you do now."},
+			{"In the 'Quit' window, you can go to the quit page  the program."},
+			{"You can go to the Quit page by pressing Ctrl + C."},
 			{""},
+			{"Always after all the animations are over, press the key."},
 			{""},
-			{""},
-			{""},
-			{""},
-			{""},
-			{""},
-			{""},
-			{""},
-			{""}
+			{"Have a good time. good bye!"},
+			{"Made by suzukaotto. [https://github.com/suzukaotto]"}
 		},
 		{
 			// page 2
-			{"Key operation"},
+			{"How to play?"},
 			{""},
-			{""},
-			{""},
-			{""},
-			{""},
-			{""},
-			{""},
-			{""},
-			{""},
-			{""},
-			{""},
-			{"Hello"}
+			{"It is a game to clear the maze and make it."},
+			{".."},
+			{".."},
+			{".."},
+			{".."},
+			{".."},
+			{".."},
+			{".."},
+			{".."},
+			{".."},
+			{".."}
 		},
 		{
 			// page 3
-			{"Credit"},
-			{""},
-			{""},
-			{""},
-			{""},
-			{""},
-			{""},
-			{""},
-			{""},
-			{""},
-			{""},
-			{""},
-			{""}
+			{"Key operation"},
+			{"..."},
+			{"..."},
+			{"..."},
+			{"..."},
+			{"..."},
+			{"..."},
+			{"..."},
+			{"..."},
+			{"..."},
+			{"..."},
+			{"..."},
+			{"..."}
 		}
 	};
 	
@@ -195,25 +207,22 @@ void manualPage(){
 	printStr("MANUAL");
 	
 	gotoxy(0, 23);
-	printStr("Z [BackPage] : X [ManualQuit] : C [NextPage]");
+	printStr("Z [Back] : X [Quit] : C [Next]");
 	while(1){
-		gotoxy(20, 22);
+		gotoxy(20, 21);
 		clsBack;
 		
-		// 설명 부분 삭제 
-		for(int i=0; i<13; i++){
+		gotoxy(0, 21);
+		cout<<pageNum+1<<"/"<<pageMax;
+		
+		// 설명 부분 재출력 
+		for(int i=0; i<14; i++){
 			gotoxy(0, i+3);
 			for(int l=0; l<100; l++)
-			 cout<<" ";
-		}
-		// 설명 부분 재출력 
-		for(int i=0; i<13; i++){
+				cout<<" ";
 			gotoxy(0, i+3);
-			printStr(manualStr[pageNum][i]);
+			cout<<manualStr[pageNum][i];
 		}
-		
-		gotoxy(0, 22);
-		cout<<"Now page "<<pageNum+1<<"/"<<pageMax;
 		
 		while(1){
 			switch(getch()){
@@ -243,10 +252,10 @@ void manualPage(){
 			}
 			
 			if(pageNum < 0 || pageNum >= pageMax){
-				gotoxy(20, 22);
+				gotoxy(20, 21);
 				clsBack;
-				gotoxy(20, 22);
-				SetColor(12);
+				gotoxy(20, 21);
+				SetColor(RED);
 				
 				if(pageNum < 0){
 					pageNum=0;
@@ -256,7 +265,7 @@ void manualPage(){
 					printStr("There is no next page!");
 					clsBack;
 				}
-				SetColor(7);
+				SetColor(WHITE);
 				continue;
 			}
 			break;
@@ -268,43 +277,53 @@ void manualPage(){
 
 int exitPage(){
 	gotoxy(0, 0);
+	SetColor(WHITE);
 	printStr("Are you sure you want to quit?");
 	
 	gotoxy(0, 1);
-	SetColor(12);
+	SetColor(RED);
 	printStr("All data using will be deleted.");
-	SetColor(7);
 	
 	gotoxy(0, 2);
+	SetColor(WHITE);
 	printStr("To exit, press the [ESC] key.");
 	
 	gotoxy(0, 3);
-	SetColor(8);
+	SetColor(GRAY);
 	printStr("(Pressing any other key cancels the quit.)");
-	SetColor(7);
 	
 	gotoxy(0, 4);
+	SetColor(WHITE);
 	printStr("> ");
 	
+	CursorVisible(true);
 	int key = getch();
+	CursorVisible(false);
+	
 	switch(key){
 		case kEsc:
 			cout<<"ESC";
+			
 			gotoxy(0, 7);
 			printStr("It's over. Good Bye!");
+			
 			gotoxy(0, 8);
 			printStr("Pressing any key closes the window . . .");
-			getch();
+			
+			pauseNUL;
 			pageCls();
 			exit(0);
 			
 		default:
 			cout<<static_cast<char>(key);
+			
 			gotoxy(0, 7);
 			printStr("Quit canceled.");
+			
 			gotoxy(0, 8);
 			printStr("Press any key to return . . .");
-			getch();
+			
+			pauseNUL;
 			return 0;
 	}
 }

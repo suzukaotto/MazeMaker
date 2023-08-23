@@ -1,0 +1,122 @@
+//색깔코드
+enum colorType{
+	BLACK,       //0
+	darkBLUE, 	 //1
+	darkGREEN,	 //2
+	darkSKYBLUE, //3
+	darkRED,     //4
+	darkPURPLE,  //5
+	darkYELLOW,	 //6
+	GRAY,	     //7
+	darkGRAY,    //8
+	BLUE,	     //9
+	GREEN,	     //10
+	SKYBlue,     //11
+	RED,	     //12
+	PURPLE,	     //13
+	YELLOW,	     //14
+	WHITE	     //15
+};
+
+
+
+// 키 아스키코드 매크로
+
+//일반키 
+enum {k0=48, k1, k2, k3, k4, k5, k6, k7, k8, k9};
+enum {kA=65, kB, kC, kD, kE, kF, kG, kH, kI, kJ, kK, kL, kM, kN, kO, kP, kQ, kR, kS , kT, kU, kV, kW, kX, kY, kZ};
+enum {ka=97, kb, kc, kd, ke, kf, kg, kh, ki, kj, kk, kl, km, kn, ko, kp, kq, kr, ks , kt, ku, kv, kw, kx, ky, kz};
+//특수키 
+enum {kCtrlC=3, kEnter=13, kEsc=27, kSpace=32};
+
+
+
+// 커서 원하는 곳으로 옮기는 함수
+
+#include <windows.h>
+
+void CursorPos(int x, int y) {
+	COORD Pos;
+	Pos.X = x;
+	Pos.Y = y;
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Pos);
+}
+
+
+
+// 커서 보임, 사이즈 조절 함수
+
+#include <windows.h>
+
+void CursorVisibleSize(int Visible, int Size) {
+	// -1 받으면 기본값으로 
+	if(Visible == -1)
+		Visible = 1;
+		
+	if(Size == -1)
+		Size = 1; 
+	
+    CONSOLE_CURSOR_INFO cursorInfo = { 0, };
+    cursorInfo.dwSize = (Size >= 0 && Size < 100) ? Size : 1; //커서 굵기 (1 ~ 100)
+    cursorInfo.bVisible = (Visible == 1) ? TRUE : FALSE;      //커서 Visible TRUE(보임) FALSE(숨김)
+    SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);
+}
+
+
+
+
+// 텍스트 색상 변경 함수
+
+#include <windows.h>
+
+void TextColor(int color) {
+	// -1 받으면 기본값으로 
+	if(color == -1)
+		color = 15;
+	
+	/*  -1 // 기본값(진한 흰색) 
+		
+		0  // 검정색
+		1  // 파랑색
+		2  // 초록색
+		3  // 옥색
+		4  // 빨간색
+		5  // 자주색
+		6  // 노란색
+		7  // 흰색
+		8  // 회색
+		9  // 연한 파란색
+		10 // 연한 초록색
+		11 // 연한 옥색
+		12 // 연한 빨간색
+		13 // 연한 자주색
+		14 // 연한 노란색
+		15 // 진한 흰색       */
+	
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
+}
+
+
+// 관리자 권한으로 실행되었는가? (bool)
+
+#include <windows.h>
+
+bool AdminJudgt() {
+    BOOL isAdmin;
+    SID_IDENTIFIER_AUTHORITY NtAuthority = SECURITY_NT_AUTHORITY;
+    PSID AdministratorsGroup;
+    if (!AllocateAndInitializeSid(&NtAuthority, 2, SECURITY_BUILTIN_DOMAIN_RID,
+        DOMAIN_ALIAS_RID_ADMINS, 0, 0, 0, 0, 0, 0, &AdministratorsGroup))
+    {
+        return false;
+    }
+
+    if (!CheckTokenMembership(NULL, AdministratorsGroup, &isAdmin))
+    {
+        FreeSid(AdministratorsGroup);
+        return false;
+    }
+
+    FreeSid(AdministratorsGroup);
+    return isAdmin == TRUE;
+}

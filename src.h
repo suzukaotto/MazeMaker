@@ -16,6 +16,26 @@ using namespace std;
 #define clsBack cout<<"                                                    "
 #define delay Sleep(1)
 
+//색깔코드
+enum colorType{
+	BLACK,       //0
+	darkBLUE, 	 //1
+	darkGREEN,	 //2
+	darkSKYBLUE, //3
+	darkRED,     //4
+	darkPURPLE,  //5
+	darkYELLOW,	 //6
+	WHITE,	     //7
+	GRAY,        //8
+	BLUE,	     //9
+	GREEN,	     //10
+	SKYBlue,     //11
+	RED,	     //12
+	PURPLE,	     //13
+	YELLOW,	     //14
+	darkWHITE    //15
+};
+
 //일반키 
 enum {k0=48, k1, k2, k3, k4, k5, k6, k7, k8, k9};
 enum {kA=65, kB, kC, kD, kE, kF, kG, kH, kI, kJ, kK, kL, kM, kN, kO, kP, kQ, kR, kS , kT, kU, kV, kW, kX, kY, kZ};
