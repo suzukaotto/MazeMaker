@@ -1,0 +1,2 @@
+int openCreatedMaze();
+int mazeMake();
